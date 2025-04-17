@@ -10,10 +10,16 @@ from models import User # Make sure models are imported before db.create_all if 
 def create_app(config_name=None):
     """Application Factory Function"""
     if config_name is None:
-        config_name = os.getenv('FLASK_ENV', 'development')
+        config_name = os.getenv('FLASK_ENV', 'development').lower()
 
     app = Flask(__name__)
-    app.config.from_object(config_by_name[config_name])
+    try:
+         app.config.from_object(config_by_name[config_name])
+    except KeyError:
+         # Fallback or raise a more specific error if the config name is invalid
+         app.logger.error(f"Invalid configuration name: '{config_name}'. Falling back to development.")
+         config_name = 'development'
+         app.config.from_object(config_by_name[config_name])
 
     # Ensure SECRET_KEY is set
     app.config['SECRET_KEY'] = get_secret_key()

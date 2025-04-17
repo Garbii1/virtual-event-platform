@@ -11,5 +11,5 @@
 # Redirect rule for single-page applications
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "frontend/src/index.html"
   status = 200

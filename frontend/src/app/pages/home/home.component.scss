@@ -1,0 +1,70 @@
+.hero-section {
+    position: relative;
+    height: 60vh; /* Adjust height as needed */
+    min-height: 400px;
+    background-image: url('/assets/images/hero-background.jpg'); /* Add your hero image here */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+    z-index: 1;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  
+    h1 {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      margin-bottom: var(--spacing-md);
+    }
+  
+    p {
+      font-size: var(--font-size-md);
+      margin-bottom: var(--spacing-lg);
+      opacity: 0.9;
+    }
+  
+    .btn {
+        margin: 0 var(--spacing-sm);
+    }
+    .btn-lg { // Make buttons larger for hero
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: var(--font-size-md);
+    }
+  }
+  
+  .features-section {
+      padding-top: var(--spacing-xl);
+      padding-bottom: var(--spacing-xl);
+  }
+  
+  .feature-card {
+      background-color: var(--card-background);
+      padding: var(--spacing-lg);
+      border-radius: var(--border-radius);
+      text-align: center;
+      box-shadow: var(--box-shadow);
+      border: 1px solid var(--border-color);
+  
+      h3 {
+          color: var(--primary-color);
+          margin-bottom: var(--spacing-sm);
+      }
+  }
+  
+  // Make sure to add a hero image at src/assets/images/hero-background.jpg

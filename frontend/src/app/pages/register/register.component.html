@@ -1,0 +1,113 @@
+<div class="container register-container">
+    <div class="register-card card">
+      <div class="card-body">
+        <h2 class="card-title text-center">Register</h2>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  
+          <!-- Global Error Message -->
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+  
+          <!-- Username Field -->
+          <div class="form-group">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" class="form-control" formControlName="username"
+                   [ngClass]="{ 'is-invalid': formControls['username'].invalid && formControls['username'].touched }">
+            <div *ngIf="formControls['username'].invalid && formControls['username'].touched" class="invalid-feedback">
+              <span *ngIf="formControls['username'].errors?.['required']">Username is required.</span>
+            </div>
+          </div>
+  
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" formControlName="email"
+                   [ngClass]="{ 'is-invalid': formControls['email'].invalid && formControls['email'].touched }">
+            <div *ngIf="formControls['email'].invalid && formControls['email'].touched" class="invalid-feedback">
+              <span *ngIf="formControls['email'].errors?.['required']">Email is required.</span>
+              <span *ngIf="formControls['email'].errors?.['email']">Please enter a valid email address.</span>
+            </div>
+          </div>
+  
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" class="form-control" formControlName="password"
+                   [ngClass]="{ 'is-invalid': formControls['password'].invalid && formControls['password'].touched }">
+            <div *ngIf="formControls['password'].invalid && formControls['password'].touched" class="invalid-feedback">
+              <span *ngIf="formControls['password'].errors?.['required']">Password is required.</span>
+              <span *ngIf="formControls['password'].errors?.['minlength']">Password must be at least 6 characters long.</span>
+            </div>
+          </div>
+  
+          <!-- Organizer Checkbox -->
+          <div class="form-group form-check">
+            <input type="checkbox" id="is_organizer" class="form-check-input" formControlName="is_organizer">
+            <label for="is_organizer" class="form-check-label">Register as an Organizer?</label>
+          </div>
+  
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="isLoading">
+            <span *ngIf="!isLoading">Register</span>
+            <!-- Basic spinner for loading state -->
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="isLoading"> Registering...</span>
+          </button>
+        </form>
+  
+        <p class="mt-3 text-center">
+          Already have an account? <a routerLink="/login">Login here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Basic styles for this page if needed -->
+  <style>
+    .register-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - 4rem);
+    }
+  
+    .register-card {
+      width: 100%;
+      max-width: 500px; /* Adjust width as needed */
+    }
+  
+    .w-100 { width: 100%; }
+  
+    .invalid-feedback {
+      color: var(--error-color);
+      font-size: var(--font-size-sm);
+      display: block;
+      margin-top: var(--spacing-xs);
+    }
+  
+    .is-invalid {
+      border-color: var(--error-color);
+       &:focus {
+           border-color: var(--error-color);
+           box-shadow: 0 0 0 0.2rem rgba(var(--error-color), 0.25);
+       }
+    }
+    .form-check {
+        display: flex;
+        align-items: center;
+    }
+    .form-check-input {
+        margin-right: 0.5em;
+        height: 1.1em; /* Adjust checkbox size slightly */
+        width: 1.1em;
+    }
+    .form-check-label {
+        margin-bottom: 0; /* Reset default label margin */
+    }
+    /* Small spinner for buttons */
+    .spinner-border-sm { display: inline-block; width: 1rem; height: 1rem; vertical-align: text-bottom; border: .2em solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spinner-border .75s linear infinite; margin-right: 0.5em; }
+    @keyframes spinner-border { to { transform: rotate(360deg); } }
+  </style>

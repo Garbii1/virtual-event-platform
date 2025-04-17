@@ -1,0 +1,21 @@
+<nav class="navbar">
+    <div class="navbar-container container">
+      <a class="navbar-brand" routerLink="/">
+        <!-- Logo Integration -->
+        <img src="assets/images/logo.png" alt="App Logo" class="navbar-logo">
+        Virtual Events
+      </a>
+      <div class="navbar-links">
+        <a routerLink="/events" routerLinkActive="active">Events</a>
+        <ng-container *ngIf="isLoggedIn$ | async as loggedIn; else loggedOutLinks">
+          <a *ngIf="isOrganizer$ | async" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+          <a routerLink="/my-registrations" routerLinkActive="active">My Registrations</a>
+          <button class="btn btn-outline-primary" (click)="logout()">Logout ({{ (currentUser$ | async)?.username }})</button>
+        </ng-container>
+        <ng-template #loggedOutLinks>
+          <a routerLink="/login" routerLinkActive="active">Login</a>
+          <a routerLink="/register" class="btn btn-primary">Register</a>
+        </ng-template>
+      </div>
+    </div>
+  </nav>

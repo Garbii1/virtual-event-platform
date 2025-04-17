@@ -1,0 +1,54 @@
+<div class="container my-registrations-container">
+    <h1 class="mb-4">My Registered Events</h1>
+  
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center mt-5">
+      <div class="spinner" role="status"><span class="visually-hidden">Loading...</span></div>
+      <p>Loading your registrations...</p>
+    </div>
+  
+    <!-- Error Message -->
+    <div *ngIf="error && !isLoading" class="alert alert-danger">
+      {{ error }}
+    </div>
+  
+    <!-- Registration List -->
+    <div *ngIf="!isLoading && !error">
+      <div *ngIf="registeredEvents$ | async as events; else noRegistrations">
+        <div *ngIf="events.length > 0; else noRegistrations">
+          <div class="list-group">
+            <!-- Registration Item Loop -->
+            <a *ngFor="let event of events" [routerLink]="['/events', event.id]" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ event.title }}</h5>
+                <small class="text-muted">{{ event.start_time | date:'shortDate' }}</small>
+              </div>
+              <p class="mb-1 text-muted">
+                Starts: {{ event.start_time | date:'medium' }}
+              </p>
+              <small>Organized by: {{ event.organizer_username }}</small>
+            </a>
+            <!-- End Registration Item Loop -->
+          </div>
+        </div>
+      </div>
+  
+      <!-- No Registrations Template -->
+      <ng-template #noRegistrations>
+        <div class="text-center mt-5 alert alert-info">
+          <p>You haven't registered for any upcoming events yet.</p>
+          <a routerLink="/events" class="btn btn-primary mt-2">Browse Events</a>
+        </div>
+      </ng-template>
+    </div>
+  
+  </div>
+  
+  <!-- Basic styles -->
+  <style>
+    .my-registrations-container { padding-top: 1rem; padding-bottom: 2rem; }
+    .list-group-item { margin-bottom: var(--spacing-sm); } /* Add space between items */
+    /* Visually hidden class */
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .spinner { display: inline-block; }
+  </style>

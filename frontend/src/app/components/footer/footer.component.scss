@@ -1,0 +1,15 @@
+/* src/app/components/footer/footer.component.scss */
+.footer {
+    background-color: #e9ecef; // A light grey background
+    color: var(--text-light);
+    padding: var(--spacing-md) 0;
+    margin-top: auto; // Pushes footer to bottom if content is short
+    height: var(--footer-height);
+    flex-shrink: 0; // Prevent footer from shrinking
+    border-top: 1px solid var(--border-color);
+  
+    p {
+        margin-bottom: 0;
+        font-size: var(--font-size-sm);
+    }
+  }

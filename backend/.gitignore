@@ -1,0 +1,11 @@
+# backend/.gitignore
+
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+instance/
+.env
+*.sqlite3
+*.db

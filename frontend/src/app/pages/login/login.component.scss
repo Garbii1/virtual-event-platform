@@ -1,0 +1,50 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - 4rem); // Center vertically
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 450px; // Limit card width
+  }
+  
+  .w-100 { // Utility class for width 100%
+      width: 100%;
+  }
+  
+  .invalid-feedback { // Style for validation errors
+      color: var(--error-color);
+      font-size: var(--font-size-sm);
+      display: block; // Make sure it shows
+      margin-top: var(--spacing-xs);
+  }
+  
+  .is-invalid { // Style for invalid input fields
+      border-color: var(--error-color);
+       &:focus { // Keep border red on focus if invalid
+           border-color: var(--error-color);
+           box-shadow: 0 0 0 0.2rem rgba(var(--error-color), 0.25);
+       }
+  }
+  
+  // Small spinner for buttons
+  .spinner-border-sm {
+      width: 1rem;
+      height: 1rem;
+      border-width: .2em;
+      display: inline-block; // Align with text
+      vertical-align: text-bottom; // Align nicely
+      margin-right: 0.5em; // Space between spinner and text
+      border: .2em solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spinner-border .75s linear infinite;
+  }
+  
+  @keyframes spinner-border {
+    to { transform: rotate(360deg); }
+  }

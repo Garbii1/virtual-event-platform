@@ -1,0 +1,24 @@
+// Add specific styles if needed, otherwise rely on global form styles
+.form-actions {
+    // Styles for button alignment etc.
+  }
+  
+  .text-danger { color: var(--error-color); } // For required asterisk
+  
+  .invalid-feedback {
+    color: var(--error-color);
+    font-size: var(--font-size-sm);
+    display: block;
+    margin-top: var(--spacing-xs);
+  }
+  
+  .is-invalid {
+    border-color: var(--error-color);
+     &:focus {
+         border-color: var(--error-color);
+         box-shadow: 0 0 0 0.2rem rgba(var(--error-color), 0.25);
+     }
+  }
+   /* Small spinner for buttons */
+  .spinner-border-sm { display: inline-block; width: 1rem; height: 1rem; vertical-align: text-bottom; border: .2em solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spinner-border .75s linear infinite; margin-right: 0.5em; }
+  @keyframes spinner-border { to { transform: rotate(360deg); } }

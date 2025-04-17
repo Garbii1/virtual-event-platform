@@ -1,0 +1,88 @@
+<div class="container event-detail-container">
+
+    <!-- Back Link -->
+    <a routerLink="/events" class="btn btn-outline-primary mb-4">← Back to Events</a>
+  
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center mt-5">
+      <div class="spinner" role="status"><span class="visually-hidden">Loading...</span></div>
+      <p>Loading event details...</p>
+    </div>
+  
+    <!-- Error Message -->
+    <div *ngIf="error && !isLoading" class="alert alert-danger">
+      {{ error }}
+    </div>
+  
+    <!-- Event Details Display -->
+    <div *ngIf="event$ | async as event; else noEventData">
+      <div class="card event-detail-card">
+        <div class="card-body">
+          <h1 class="card-title">{{ event.title }}</h1>
+          <hr class="my-3">
+  
+          <div class="event-meta mb-3 text-muted">
+             <p><strong>Starts:</strong> {{ event.start_time | date:'fullDate' }} at {{ event.start_time | date:'shortTime' }}</p>
+             <p *ngIf="event.end_time"><strong>Ends:</strong> {{ event.end_time | date:'fullDate' }} at {{ event.end_time | date:'shortTime' }}</p>
+             <p><strong>Organizer:</strong> {{ event.organizer_username }}</p>
+             <p *ngIf="event.location">
+               <strong>Location/Link:</strong>
+               <!-- Basic check if it looks like a URL -->
+               <ng-container *ngIf="event.location.startsWith('http'); else plainLocation">
+                 <a [href]="event.location" target="_blank" rel="noopener noreferrer">{{ event.location }}</a>
+               </ng-container>
+               <ng-template #plainLocation>{{ event.location }}</ng-template>
+             </p>
+             <p><small>Attendee Count: {{ event.attendee_count ?? 0 }}</small></p>
+          </div>
+  
+          <h4 class="mt-4">Description</h4>
+          <p class="event-description">{{ event.description || 'No description provided.' }}</p>
+  
+          <!-- Registration Section -->
+          <div class="registration-section mt-4 pt-3 border-top">
+            <div *ngIf="isLoggedIn$ | async; else showLoginMessage">
+              <!-- Show registration button if logged in -->
+               <button class="btn btn-success btn-lg" (click)="register(event.id)" [disabled]="isRegistering || registrationMessage">
+                 <span *ngIf="!isRegistering && !registrationMessage">Register for this Event</span>
+                 <span *ngIf="isRegistering">Registering...</span>
+                 <span *ngIf="registrationMessage">Registered!</span> <!-- Or show confirmation message -->
+               </button>
+               <!-- Registration Status Messages -->
+               <div *ngIf="registrationMessage" class="alert alert-success mt-3">
+                   {{ registrationMessage }}
+               </div>
+               <div *ngIf="registrationError" class="alert alert-danger mt-3">
+                   {{ registrationError }}
+               </div>
+            </div>
+            <ng-template #showLoginMessage>
+              <!-- Show message if not logged in -->
+              <p class="alert alert-info">
+                <a routerLink="/login" [queryParams]="{ returnUrl: router.url }">Login</a> or <a routerLink="/register">Register</a> to sign up for this event.
+              </p>
+            </ng-template>
+          </div>
+  
+        </div> <!-- End card-body -->
+      </div> <!-- End card -->
+    </div> <!-- End *ngIf event -->
+  
+    <!-- Template shown if event is null (e.g., ID not found but no error thrown) -->
+    <ng-template #noEventData>
+      <div *ngIf="!isLoading && !error">
+          <p class="text-center mt-5">Event data could not be loaded.</p>
+      </div>
+    </ng-template>
+  
+  </div>
+  
+  <!-- Basic styles -->
+  <style>
+   .event-detail-container { padding-top: 1rem; padding-bottom: 2rem; }
+   .event-meta p { margin-bottom: 0.5rem; }
+   .event-description { white-space: pre-wrap; } /* Preserve line breaks in description */
+   /* Visually hidden class */
+   .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+   .spinner { display: inline-block; }
+  </style>

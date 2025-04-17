@@ -1,0 +1,22 @@
+<!-- Overlay and Modal Container -->
+<div class="modal-overlay" *ngIf="isOpen" (click)="closeModal()">
+    <!-- Modal Dialog -->
+    <div class="modal-dialog" [ngClass]="modalSizeClass" (click)="onContentClick($event)">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <!-- Modal Body (Content Projection) -->
+      <div class="modal-body">
+        <ng-content></ng-content> <!-- Where the dynamic content goes -->
+      </div>
+      <!-- Optional Modal Footer (Can be added via ng-content or specific inputs/outputs) -->
+      <!--
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+      -->
+    </div>
+  </div>

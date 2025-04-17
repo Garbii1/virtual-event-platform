@@ -1,0 +1,80 @@
+/* src/app/components/navbar/navbar.component.scss */
+.navbar {
+    background-color: var(--card-background);
+    border-bottom: 1px solid var(--border-color);
+    height: var(--navbar-height);
+    position: fixed; // Fixed navbar
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; // Ensure it's above other content
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 var(--spacing-md); // Adjust padding for fixed height
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+  
+    &:hover {
+      text-decoration: none;
+      opacity: 0.9;
+    }
+  }
+  
+  .navbar-logo {
+    height: 35px; // Adjust logo size
+    width: auto;
+    margin-right: var(--spacing-sm);
+    vertical-align: middle;
+  }
+  
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+  
+    a, button {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+  
+      &.active {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+  
+      &:hover:not(.btn) { // Don't apply hover underline to buttons
+        color: var(--primary-color);
+        text-decoration: none; // Ensure no underline on hover for non-buttons
+      }
+    }
+  
+    .btn {
+        padding: var(--spacing-xs) var(--spacing-md); // Smaller padding for navbar buttons
+    }
+    .btn-outline-primary {
+        margin-left: var(--spacing-sm); // Space before logout button
+    }
+  }
+  
+  // Responsive adjustments (e.g., burger menu for smaller screens)
+  @media (max-width: 768px) {
+    .navbar-links {
+      // Hide links, implement burger menu logic here if needed
+      display: none; // Simple hiding for now
+    }
+    // Add burger menu icon display logic here
+  }

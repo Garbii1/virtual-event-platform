@@ -1,0 +1,56 @@
+<form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+
+    <!-- Display error message passed from parent -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title" class="form-label">Event Title <span class="text-danger">*</span></label>
+      <input type="text" id="title" class="form-control" formControlName="title"
+             [ngClass]="{ 'is-invalid': formControls['title'].invalid && formControls['title'].touched }">
+      <div *ngIf="formControls['title'].invalid && formControls['title'].touched" class="invalid-feedback">
+        Event Title is required.
+      </div>
+    </div>
+  
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" class="form-control" formControlName="description" rows="4"></textarea>
+    </div>
+  
+    <!-- Start Time -->
+    <div class="form-group">
+      <label for="start_time_local" class="form-label">Start Time <span class="text-danger">*</span></label>
+      <input type="datetime-local" id="start_time_local" class="form-control" formControlName="start_time_local"
+             [ngClass]="{ 'is-invalid': formControls['start_time_local'].invalid && formControls['start_time_local'].touched }">
+      <div *ngIf="formControls['start_time_local'].invalid && formControls['start_time_local'].touched" class="invalid-feedback">
+        Start Time is required.
+      </div>
+    </div>
+  
+    <!-- End Time -->
+    <div class="form-group">
+      <label for="end_time_local" class="form-label">End Time (Optional)</label>
+      <input type="datetime-local" id="end_time_local" class="form-control" formControlName="end_time_local">
+      <!-- Add validation if end time must be after start time -->
+    </div>
+  
+    <!-- Location -->
+    <div class="form-group">
+      <label for="location" class="form-label">Location / Meeting URL</label>
+      <input type="text" id="location" class="form-control" formControlName="location">
+    </div>
+  
+    <!-- Form Actions -->
+    <div class="form-actions mt-4 d-flex justify-content-end gap-2">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="isLoading || eventForm.invalid">
+        <span *ngIf="!isLoading">{{ isEditMode ? 'Update Event' : 'Create Event' }}</span>
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="isLoading"> Saving...</span>
+      </button>
+    </div>
+  </form>

@@ -1,0 +1,27 @@
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <h1>Discover & Host Virtual Events</h1>
+      <p>Your platform for seamless online gatherings, conferences, and meetups.</p>
+      <a routerLink="/events" class="btn btn-primary btn-lg">Browse Events</a>
+      <a *ngIf="(isOrganizer$ | async)" routerLink="/dashboard" class="btn btn-secondary btn-lg">Organizer Dashboard</a>
+    </div>
+  </div>
+  
+  <div class="container features-section">
+    <h2 class="text-center">Platform Features</h2>
+    <div class="grid md:grid-cols-3">
+      <div class="feature-card">
+        <h3>📅 Event Creation</h3>
+        <p>Organizers can easily create and manage event details.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🎟️ Simple Registration</h3>
+        <p>Attendees can browse and register for events with one click.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🔔 Email Reminders</h3>
+        <p>Automatic reminders sent to attendees before the event starts.</p>
+      </div>
+    </div>
+  </div>

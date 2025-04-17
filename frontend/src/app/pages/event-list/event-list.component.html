@@ -1,0 +1,74 @@
+<div class="container event-list-container">
+    <h1 class="mb-4">Upcoming Events</h1>
+  
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center mt-5">
+      <div class="spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Loading events...</p>
+    </div>
+  
+    <!-- Error Message -->
+    <div *ngIf="error && !isLoading" class="alert alert-danger">
+      {{ error }}
+    </div>
+  
+    <!-- Event List -->
+    <div *ngIf="!isLoading && !error">
+      <div *ngIf="events$ | async as events; else noEvents">
+        <div *ngIf="events.length > 0; else noEvents">
+          <div class="grid md:grid-cols-2 lg:grid-cols-3">
+            <!-- Event Card Loop -->
+            <div *ngFor="let event of events" class="card event-card">
+              <div class="card-body">
+                <h3 class="card-title">{{ event.title }}</h3>
+                <p class="card-text text-muted">
+                  <small>
+                    <!-- Using date pipe to format. Add timezone info if needed -->
+                    Starts: {{ event.start_time | date:'medium' }}
+                    <span *ngIf="event.end_time"> - Ends: {{ event.end_time | date:'shortTime' }}</span>
+                  </small>
+                </p>
+                <p class="card-text description">
+                  {{ event.description | slice:0:100 }}{{ (event.description && event.description.length > 100) ? '...' : '' }}
+                </p>
+                 <p class="card-text"><small>Organized by: {{ event.organizer_username }}</small></p>
+                <a [routerLink]="['/events', event.id]" class="btn btn-primary">View Details</a>
+              </div>
+            </div>
+            <!-- End Event Card Loop -->
+          </div>
+        </div>
+      </div>
+  
+      <!-- No Events Template -->
+      <ng-template #noEvents>
+        <div class="text-center mt-5">
+          <p>There are no upcoming events scheduled at the moment.</p>
+        </div>
+      </ng-template>
+    </div>
+  
+  </div>
+  
+  <!-- Basic styles -->
+  <style>
+    .event-card .description {
+      min-height: 3.2em; /* Ensure cards have similar height even with short descriptions */
+      margin-bottom: var(--spacing-md);
+    }
+    /* Visually hidden class for accessibility */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .spinner { display: inline-block; } /* Ensure spinner centers */
+  </style>

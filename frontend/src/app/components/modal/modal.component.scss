@@ -1,0 +1,100 @@
+:host {
+    display: contents; // Ensure the host doesn't interfere with layout
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // Semi-transparent backdrop
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; // Ensure it's above other content
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s; // Fade effect
+  
+    // Style when modal is open (triggered by *ngIf)
+    & { // Using & to re-apply selector when *ngIf is true
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease;
+    }
+  }
+  
+  .modal-dialog {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 90%; // Default width, responsive
+    max-width: 500px; // Default max width (medium)
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; // Prevent modal from being too tall
+    overflow: hidden; // Clip content if needed
+    transform: translateY(-50px); // Initial animation state
+    transition: transform 0.3s ease-out;
+  
+    // Animation when modal is open
+    .modal-overlay & { // Target when overlay is visible
+       transform: translateY(0);
+    }
+  }
+  
+  // Size variations
+  .modal-sm { max-width: 300px; }
+  .modal-lg { max-width: 800px; }
+  .modal-xl { max-width: 1140px; }
+  
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+  
+    .modal-title {
+      margin-bottom: 0;
+      font-size: var(--font-size-md);
+      font-weight: 600;
+    }
+  }
+  
+  .btn-close {
+    background: transparent url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/></svg>") center/1em auto no-repeat;
+    border: 0;
+    border-radius: 0.25rem;
+    opacity: 0.5;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0.25em;
+    cursor: pointer;
+    transition: opacity 0.15s ease-in-out;
+  
+    &:hover {
+      opacity: 0.8;
+    }
+    &:focus {
+       outline: none;
+       box-shadow: 0 0 0 0.2rem rgba(var(--primary-color), 0.25);
+    }
+  }
+  
+  
+  .modal-body {
+    padding: var(--spacing-lg);
+    overflow-y: auto; // Allow body content to scroll if needed
+  }
+  
+  // Optional Footer Styling (if you add one)
+  // .modal-footer {
+  //   padding: var(--spacing-md) var(--spacing-lg);
+  //   border-top: 1px solid var(--border-color);
+  //   display: flex;
+  //   justify-content: flex-end;
+  //   gap: var(--spacing-sm);
+  // }

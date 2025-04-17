@@ -1,0 +1,15 @@
+# netlify.toml (Place in project root)
+
+[build]
+  # Base directory for the build context
+  base = "frontend"
+  # Build command (relative to base)
+  command = "ng build --configuration=production"
+  # Publish directory (relative to base)
+  publish = "dist/frontend" # <-- Or dist/virtual-event-app if that's the output name
+
+# Redirect rule for single-page applications
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

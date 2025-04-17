@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model'; // Create this model interface
@@ -75,12 +75,21 @@ export class AuthService {
                }
            }),
            catchError(err => {
-               this.currentUserSubject.next(null); // Assume logged out on error
+            // If the error is specifically a 401 from the status check,
+            // it just means the user isn't logged in. This is expected.
+            // Log other errors, but treat 401 gracefully here.
+            if (err.status !== 401) {
                console.error("Error checking session status:", err);
-               return throwError(() => new Error('Session check failed')); // Rethrow or handle as needed
-           })
-       );
-  }
+            } else {
+               console.log("Session check returned 401 (User not logged in).");
+            }
+            this.currentUserSubject.next(null); // Ensure user state is cleared
+            // Don't re-throw the error here, as a failed session check isn't necessarily fatal
+            // Return an observable indicating logged_out status
+            return of({ logged_in: false }); // Use RxJS 'of' to return an observable
+        })
+    );
+}
 
    private checkInitialSession(): void {
        this.checkSessionStatus().subscribe(); // Subscribe to trigger the check

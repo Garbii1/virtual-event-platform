@@ -1,21 +1,29 @@
 <nav class="navbar">
-    <div class="navbar-container container">
-      <a class="navbar-brand" routerLink="/">
-        <!-- Logo Integration -->
-        <img src="assets/images/logo.png" alt="App Logo" class="navbar-logo">
-        Virtual Events
-      </a>
-      <div class="navbar-links">
-        <a routerLink="/events" routerLinkActive="active">Events</a>
-        <ng-container *ngIf="isLoggedIn$ | async as loggedIn; else loggedOutLinks">
-          <a *ngIf="isOrganizer$ | async" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-          <a routerLink="/my-registrations" routerLinkActive="active">My Registrations</a>
-          <button class="btn btn-outline-primary" (click)="logout()">Logout ({{ (currentUser$ | async)?.username }})</button>
-        </ng-container>
-        <ng-template #loggedOutLinks>
-          <a routerLink="/login" routerLinkActive="active">Login</a>
-          <a routerLink="/register" class="btn btn-primary">Register</a>
-        </ng-template>
-      </div>
+  <div class="navbar-container container">
+    <!-- Brand Section -->
+    <a class="navbar-brand" routerLink="/" (click)="closeMobileMenu()">
+      <img src="/frontend/src/assets/images/logo.png" alt="" class="navbar-logo">
+      <span>Virtual Events</span> <!-- Wrap text in span if needed for styling -->
+    </a>
+
+    <!-- Mobile Burger Button (visible only on small screens) -->
+    <button class="navbar-toggler" type="button" (click)="toggleMobileMenu()">
+      <i class="fas fa-bars"></i> <!-- Font Awesome burger icon -->
+    </button>
+
+    <!-- Links Container (Toggled on mobile) -->
+    <div class="navbar-links" [class.open]="isMobileMenuOpen">
+      <a routerLink="/events" routerLinkActive="active" (click)="closeMobileMenu()">Events</a>
+      <ng-container *ngIf="isLoggedIn$ | async as loggedIn; else loggedOutLinks">
+        <a *ngIf="isOrganizer$ | async" routerLink="/dashboard" routerLinkActive="active" (click)="closeMobileMenu()">Dashboard</a>
+        <a routerLink="/my-registrations" routerLinkActive="active" (click)="closeMobileMenu()">My Registrations</a>
+        <!-- Logout button might need specific styling in mobile view -->
+        <button class="btn btn-outline-primary btn-logout" (click)="logout()">Logout ({{ (currentUser$ | async)?.username }})</button>
+      </ng-container>
+      <ng-template #loggedOutLinks>
+        <a routerLink="/login" routerLinkActive="active" (click)="closeMobileMenu()">Login</a>
+        <a routerLink="/register" class="btn btn-primary" (click)="closeMobileMenu()">Register</a>
+      </ng-template>
     </div>
-  </nav>
+  </div>
+</nav>

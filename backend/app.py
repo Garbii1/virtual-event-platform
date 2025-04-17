@@ -34,13 +34,9 @@ def create_app(config_name=None):
     login_manager.init_app(app)
 
     # Configure CORS more specifically
-    cors.init_app(app, resources={r"/api/*": {"origins": app.config['FRONTEND_URL']}, # DEPRECATED / OLD style - needs update below
-                                  r"/auth/*": {"origins": app.config['FRONTEND_URL']},
-                                  r"/events/*": {"origins": app.config['FRONTEND_URL']},
-                                  r"/my-events": {"origins": app.config['FRONTEND_URL']},
-                                  r"/my-registrations": {"origins": app.config['FRONTEND_URL']},
-                                  r"/send-reminders": {"origins": "*"}}, # Allow reminders from anywhere if needed, or restrict
-                  supports_credentials=True) # IMPORTANT for session cookies
+    cors.init_app(app,
+              origins=[app.config.get('FRONTEND_URL', 'http://localhost:4200')], # Explicitly allow frontend origin
+              supports_credentials=True) # Crucial for sending/receiving session cookies
 
 
     # Register Blueprints

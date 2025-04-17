@@ -40,6 +40,23 @@
     vertical-align: middle;
   }
   
+  .navbar-toggler {
+    display: none; // Hidden by default
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    color: var(--text-color);
+  
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba(var(--primary-color), 0.25);
+    }
+  }
+  
   .navbar-links {
     display: flex;
     align-items: center;
@@ -63,18 +80,58 @@
     }
   
     .btn {
-        padding: var(--spacing-xs) var(--spacing-md); // Smaller padding for navbar buttons
-    }
-    .btn-outline-primary {
-        margin-left: var(--spacing-sm); // Space before logout button
-    }
+      padding: var(--spacing-xs) var(--spacing-md);
   }
-  
-  // Responsive adjustments (e.g., burger menu for smaller screens)
-  @media (max-width: 768px) {
-    .navbar-links {
-      // Hide links, implement burger menu logic here if needed
-      display: none; // Simple hiding for now
-    }
-    // Add burger menu icon display logic here
+  .btn-logout { // Specific class if needed
+      margin-left: var(--spacing-sm);
   }
+}
+
+
+// --- Responsive adjustments ---
+@media (max-width: 992px) { // Adjust breakpoint as needed (e.g., 992px, 768px)
+  .navbar-toggler {
+    display: block; // Show burger button on smaller screens
+  }
+
+  .navbar-links {
+    display: none; // Hide links container by default on mobile
+    position: absolute; // Position it for dropdown/slide-in
+    top: var(--navbar-height); // Position below navbar
+    left: 0;
+    width: 100%;
+    background-color: var(--card-background); // Give it a background
+    flex-direction: column; // Stack links vertically
+    align-items: stretch; // Stretch links full width
+    padding: var(--spacing-md) 0; // Add some padding
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999; // Ensure it's above content but below navbar potentially
+    gap: 0; // Reset gap for vertical layout
+
+    &.open {
+      display: flex; // Show the menu when 'open' class is added
+    }
+
+    // Style links within the mobile menu
+    a, button {
+      padding: var(--spacing-md) var(--spacing-lg); // More padding for touch targets
+      text-align: left; // Align text left
+      border-bottom: 1px solid var(--border-color); // Separator lines
+      width: 100%; // Make buttons full width
+      border-radius: 0; // Remove button border-radius if desired
+      margin: 0 !important; // Override potential margins
+
+      &:last-child {
+        border-bottom: none; // Remove border from last item
+      }
+
+       &.active { // Optional: different active style for mobile
+          background-color: rgba(var(--primary-color), 0.1);
+       }
+    }
+     .btn-primary, .btn-outline-primary {
+        text-align: center; // Center text for buttons maybe
+     }
+  }
+}

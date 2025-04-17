@@ -1,0 +1,16 @@
+# Root .gitignore
+/backend/venv/
+/backend/__pycache__/
+/backend/*.pyc
+/backend/*.pyo
+/backend/*.pyd
+/backend/instance/
+/backend/.env
+/backend/*.sqlite3
+/backend/dev.db
+/backend/migrations/ # Usually committed, but exclude if preferred initially
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.angular/
+*.log
+.DS_Store

@@ -18,6 +18,8 @@ export class NavbarComponent implements OnInit {
   isOrganizer$: Observable<boolean>;
   currentUser$: Observable<User | null>;
 
+  isMobileMenuOpen = false; // <-- Add state for mobile menu
+
   constructor(private authService: AuthService, private router: Router) {
     this.currentUser$ = this.authService.currentUser$;
     this.isLoggedIn$ = this.currentUser$.pipe(map(user => !!user));
@@ -26,14 +28,24 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  // Close mobile menu when a link is clicked (optional but good UX)
+  closeMobileMenu(): void {
+      this.isMobileMenuOpen = false;
+  }
+
   logout(): void {
+    this.isMobileMenuOpen = false; // Close menu on logout
     this.authService.logout().subscribe({
       next: () => {
-        this.router.navigate(['/login']); // Redirect after logout
+        console.log("Logout API call successful, redirecting...");
+        this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.error('Logout failed:', err);
-        // Handle error display if needed
+        console.error('Logout failed in NavbarComponent:', err);
       }
     });
   }

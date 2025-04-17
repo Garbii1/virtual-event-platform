@@ -52,8 +52,19 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               {
-                "glob": "**/*",
-                "input": "public"
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "**/*", 
+                "input": "src/assets", 
+                "output": "assets"
+              },
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": [
@@ -115,11 +126,17 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+             {
+               "glob": "favicon.ico",
+               "input": "src",
+               "output": "/"
+             },
+             {
+               "glob": "**/*",
+               "input": "src/assets",
+               "output": "assets"
+             }
+           ],
             "styles": [
               "src/styles.scss"
             ],

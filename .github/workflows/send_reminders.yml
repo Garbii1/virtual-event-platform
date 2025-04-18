@@ -1,0 +1,28 @@
+name: Send Event Reminders
+
+on:
+  schedule:
+    # Runs every hour at 5 minutes past the hour (adjust as needed)
+    # See https://crontab.guru/ for cron syntax
+    - cron: '5 * * * *'
+  workflow_dispatch: # Allows manual triggering from GitHub Actions tab
+
+jobs:
+  send_reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Reminder Request
+        run: |
+          # Use curl to POST to your reminder endpoint
+          # Add -f to fail if the HTTP status code is >= 400
+          # Add -sS to be silent but show errors
+          curl -sfS -X POST "${{ secrets.REMINDER_ENDPOINT_URL }}" \
+            -H "Content-Type: application/json" \
+            # Optional: Add a secret header for basic security
+            # -H "X-Scheduler-Secret: ${{ secrets.SCHEDULER_SECRET }}"
+          echo "Reminder request sent."
+        env:
+          # Define the URL as a secret in your GitHub repo settings
+          REMINDER_ENDPOINT_URL: ${{ secrets.REMINDER_ENDPOINT_URL }}
+          # Optional: Define the secret header value as a secret
+          # SCHEDULER_SECRET: ${{ secrets.SCHEDULER_SECRET }}
